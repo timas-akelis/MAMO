@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/lesson', function () {
+    return view('lesson');
+})->middleware(['auth', 'verified'])->name('lesson');
+
+Route::resource('lesson', '\App\Http\Controllers\LessonController');
+
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
