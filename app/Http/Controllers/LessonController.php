@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
+use App\Models\Lesson;
 
 class LessonController extends Controller
 {
@@ -12,8 +12,8 @@ class LessonController extends Controller
      */
     public function index()
     {
-        //Post
-        return view('lesson.index');
+        $lessons = Lesson::all();
+        return view('lesson.index')->with('lessons', $lessons);
     }
 
     /**
@@ -37,7 +37,8 @@ class LessonController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $lesson = Lesson::find($id);
+        return view('lesson.show')->with('lesson', $lesson);
     }
 
     /**
