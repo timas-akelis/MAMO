@@ -3,7 +3,7 @@
 @section('content')
     <a href="/lesson/create">Create a new lesson</a>
     <h1>Lessons:</h1>
-    @if(count($lessons) > 1)
+    @if(count($lessons) >= 1)
         @foreach($lessons as $lesson)
             <div class="well">
                 <h3><a href="/lesson/{{$lesson->id}}">{{$lesson->time}}</a></h3>
@@ -11,6 +11,6 @@
             </div>
         @endforeach
     @else
-        <p>No post found</p>
+        <p>No lesson found</p>
     @endif
 @endsection

@@ -20,6 +20,8 @@ Route::get('/lesson', function () {
 
 Route::resource('lesson', '\App\Http\Controllers\LessonController');
 
+Route::resource('module', '\App\Http\Controllers\ModuleController');
+
 
 
 

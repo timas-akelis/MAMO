@@ -16,4 +16,8 @@ class Lesson extends Model
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function module() {
+        return $this->belongsTo('App\Models\Module');
+    }
 }
