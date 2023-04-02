@@ -19,10 +19,13 @@ Route::get('/lesson', function () {
 })->middleware(['auth', 'verified'])->name('lesson');
 
 Route::resource('lesson', '\App\Http\Controllers\LessonController');
-
 Route::resource('module', '\App\Http\Controllers\ModuleController');
-
-
+Route::resource('group', '\App\Http\Controllers\GroupController');
+Route::resource('room', '\App\Http\Controllers\RoomController');
+Route::resource('grade', '\App\Http\Controllers\GradeController');
+Route::resource('school', '\App\Http\Controllers\SchoolController');
+Route::resource('timetable', '\App\Http\Controllers\TimetableController');
+Route::resource('rule', '\App\Http\Controllers\RuleController');
 
 
 Route::get('/', function () {

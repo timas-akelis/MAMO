@@ -43,6 +43,29 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+                <a class="navbar-brand" href="{{ url('/module') }}">
+                    Modules
+                </a>
+                <a class="navbar-brand" href="{{ url('/group') }}">
+                    Grupes
+                </a>
+                <a class="navbar-brand" href="{{ url('/room') }}">
+                    Kabinetai
+                </a>
+                <a class="navbar-brand" href="{{ url('/grade') }}">
+                    Pazymiai
+                </a>
+                <a class="navbar-brand" href="{{ url('/school') }}">
+                    Mokyklos
+                </a>
+                <a class="navbar-brand" href="{{ url('/timetable') }}">
+                    Tvarkarasciai
+                </a>
+                <a class="navbar-brand" href="{{ url('/rule') }}">
+                    Taisykle
+                </a>
+
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
