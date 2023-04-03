@@ -32,37 +32,29 @@
                 <a class="navbar-brand" href="{{ url('/dashboard') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
                 <a class="navbar-brand" href="{{ url('/lesson') }}">
-                    Lessons
+                    Tvarkaraštis
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
                 <a class="navbar-brand" href="{{ url('/module') }}">
-                    Modules
+                    Moduliai
                 </a>
                 <a class="navbar-brand" href="{{ url('/group') }}">
-                    Grupes
+                    Grupės
                 </a>
                 <a class="navbar-brand" href="{{ url('/room') }}">
                     Kabinetai
                 </a>
                 <a class="navbar-brand" href="{{ url('/grade') }}">
-                    Pazymiai
+                    Pažymiai
                 </a>
                 <a class="navbar-brand" href="{{ url('/school') }}">
                     Mokyklos
                 </a>
                 <a class="navbar-brand" href="{{ url('/timetable') }}">
-                    Tvarkarasciai
+                    Tvarkaraščių Archyvas
                 </a>
                 <a class="navbar-brand" href="{{ url('/rule') }}">
-                    Taisykle
+                    Taisyklė
                 </a>
 
 
