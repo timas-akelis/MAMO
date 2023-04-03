@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
+use App\Models\Lesson;
+use App\Models\User;
 
 class LessonController extends Controller
 {
@@ -12,8 +13,12 @@ class LessonController extends Controller
      */
     public function index()
     {
-        //Post
-        return view('lesson.index');
+        //$lessons = Lesson::all();
+        //return view('lesson.index')->with('lessons', $lessons);
+
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        return view('lesson.index')->with('lessons', $user->lessons);
     }
 
     /**
@@ -21,7 +26,7 @@ class LessonController extends Controller
      */
     public function create()
     {
-        //
+        return view('lesson.create');
     }
 
     /**
@@ -29,7 +34,25 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Consider using the laravel-ckeditor for things like bold text
+        //7th video end describes how
+
+        $this->validate($request, [
+            'time' => 'required',
+        ]);
+
+        $date = $request->input('date');
+        $time = $request->input('time');
+
+        //Create lesson
+        $lesson = new Lesson;
+        $lesson->time = date('Y-m-d H:i', strtotime("$date $time"));
+        $lesson->comment = $request->input('comment');
+        $lesson->homework = $request->input('homework');
+        $lesson->test = $request->input('test');
+        $lesson->save();
+
+        return redirect('/lesson')->with('success', 'Lesson created');
     }
 
     /**
@@ -37,7 +60,8 @@ class LessonController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $lesson = Lesson::find($id);
+        return view('lesson.show')->with('lesson', $lesson);
     }
 
     /**
@@ -45,7 +69,8 @@ class LessonController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $lesson = Lesson::find($id);
+        return view('lesson.edit')->with('lesson', $lesson);
     }
 
     /**
@@ -53,7 +78,22 @@ class LessonController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'time' => 'required',
+        ]);
+
+        $date = $request->input('date');
+        $time = $request->input('time');
+
+        //Create lesson
+        $lesson = Lesson::find($id);
+        $lesson->time = date('Y-m-d H:i', strtotime("$date $time"));
+        $lesson->comment = $request->input('comment');
+        $lesson->homework = $request->input('homework');
+        $lesson->test = $request->input('test');
+        $lesson->save();
+
+        return redirect('/lesson')->with('success', 'Lesson updated (currently overwrites time)');
     }
 
     /**
@@ -61,6 +101,8 @@ class LessonController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $lesson = Lesson::find($id);
+        $lesson->delete();
+        return redirect('/lesson')->with('success', 'Lesson removed');
     }
 }

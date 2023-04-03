@@ -4,6 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Latest compiled and minified CSS 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    
+    <!-- Latest compiled JavaScript 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -28,11 +37,34 @@
                 </button>
 
                 <a class="navbar-brand" href="{{ url('/lesson') }}">
-                    asadasdas
+                    Lessons
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <a class="navbar-brand" href="{{ url('/module') }}">
+                    Modules
+                </a>
+                <a class="navbar-brand" href="{{ url('/group') }}">
+                    Grupes
+                </a>
+                <a class="navbar-brand" href="{{ url('/room') }}">
+                    Kabinetai
+                </a>
+                <a class="navbar-brand" href="{{ url('/grade') }}">
+                    Pazymiai
+                </a>
+                <a class="navbar-brand" href="{{ url('/school') }}">
+                    Mokyklos
+                </a>
+                <a class="navbar-brand" href="{{ url('/timetable') }}">
+                    Tvarkarasciai
+                </a>
+                <a class="navbar-brand" href="{{ url('/rule') }}">
+                    Taisykle
+                </a>
+
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -80,6 +112,7 @@
         </nav>
 
         <main class="py-4">
+            @include('inc.messages')
             @yield('content')
         </main>
     </div>
