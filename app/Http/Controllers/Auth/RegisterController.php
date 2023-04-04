@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\School;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,10 +65,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $schoolId = 1;
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'school_id' => $schoolId, //JESUS CHRIST HARDCODE IT DOESNT EVEN WORK LMAO
+            //'school_id' => School::all()->sortByDesc('id')->first(), //HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT
+            //'school_id' => $data['school_id'], CIA REIKIA GAUTI IS /resources/views/auth/register SCHOOL ID
         ]);
     }
 }

@@ -27,9 +27,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('school_id')->constrained()->onDelete('cascade');
-        });
+
 
         Schema::table('grades', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
