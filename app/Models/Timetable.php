@@ -10,4 +10,8 @@ class Timetable extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function lessons() {
+        return $this->hasMany('App\Models\Lesson');
+    }
 }
