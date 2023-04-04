@@ -4,10 +4,12 @@
     <a href="/lesson" class="btn btn-default">Go back</a>
     <h1>Lesson information</h1>
     <div class="well">
-        <h4>{{$lesson->time}}</h4>
-        <h4>{{$lesson->comment}}</h4>
-        <h4>{{$lesson->homework}}</h4>
-        <h4>{{$lesson->test}}</h4>
+        <h4>Modulis: {{$moduleLesson->title}}</h4>
+        <h4>Kabinetas: {{$roomLesson->location}}</h4>
+        <h4>Pamokos laikas: {{$lesson->time}}</h4>
+        <h4>Komentaras: {{$lesson->comment}}</h4>
+        <h4>Namu darbai: {{$lesson->homework}}</h4>
+        <h4>Testas: {{$lesson->test}}</h4>
     </div>
     <hr>
     <a href="/lesson/{{$lesson->id}}/edit" class="btn btn-default">Edit</a>

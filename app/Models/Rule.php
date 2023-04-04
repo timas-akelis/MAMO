@@ -10,4 +10,9 @@ class Rule extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+
+    public function school() {
+        return $this->belongsTo('App\Models\School');
+    }
 }

@@ -14,4 +14,12 @@ class Module extends Model
     public function lessons() {
         return $this->hasMany('App\Models\Lesson');
     }
+
+    public function group() {
+        return $this->belongsTo('App\Models\Group');
+    }
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
 }

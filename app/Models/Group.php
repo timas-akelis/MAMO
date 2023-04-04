@@ -10,4 +10,8 @@ class Group extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function modules() {
+        return $this->hasMany('App\Models\Module');
+    }
 }

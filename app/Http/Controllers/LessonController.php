@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lesson;
-use App\Models\User;
+use App\Models\Module;
+use App\Models\Room;
+use App\Models\Timetable;
 
 class LessonController extends Controller
 {
@@ -16,9 +18,8 @@ class LessonController extends Controller
         //$lessons = Lesson::all();
         //return view('lesson.index')->with('lessons', $lessons);
 
-        $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        return view('lesson.index')->with('lessons', $user->lessons);
+        $lessons = Lesson::all();
+        return view('lesson.index')->with('lessons', $lessons);
     }
 
     /**
@@ -26,7 +27,9 @@ class LessonController extends Controller
      */
     public function create()
     {
-        return view('lesson.create');
+        $modules = Module::all();
+        $rooms = Room::all();
+        return view('lesson.create', compact('modules', 'rooms'));
     }
 
     /**
@@ -46,10 +49,15 @@ class LessonController extends Controller
 
         //Create lesson
         $lesson = new Lesson;
+        $lesson->module_id = $request->input('module_id');
+        $lesson->room_id = $request->input('room_id');
         $lesson->time = date('Y-m-d H:i', strtotime("$date $time"));
         $lesson->comment = $request->input('comment');
         $lesson->homework = $request->input('homework');
         $lesson->test = $request->input('test');
+
+        $lesson->timetable_id = Timetable::orderBy('id', 'DESC')->first()->id; //HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT 
+        
         $lesson->save();
 
         return redirect('/lesson')->with('success', 'Lesson created');
@@ -61,7 +69,10 @@ class LessonController extends Controller
     public function show(string $id)
     {
         $lesson = Lesson::find($id);
-        return view('lesson.show')->with('lesson', $lesson);
+        $moduleLesson = Module::find($lesson->module_id);
+        $roomLesson = Room::find($lesson->room_id);
+        return view('lesson.show', compact('lesson', 'moduleLesson', 'roomLesson'));
+        //return view('lesson.show')->with('lesson', $lesson);
     }
 
     /**
@@ -70,7 +81,9 @@ class LessonController extends Controller
     public function edit(string $id)
     {
         $lesson = Lesson::find($id);
-        return view('lesson.edit')->with('lesson', $lesson);
+        $modules = Module::all();
+        $rooms = Room::all();
+        return view('lesson.edit', compact('lesson', 'modules', 'rooms'));
     }
 
     /**
@@ -87,6 +100,8 @@ class LessonController extends Controller
 
         //Create lesson
         $lesson = Lesson::find($id);
+        $lesson->module_id = $request->input('module_id');
+        $lesson->room_id = $request->input('room_id');
         $lesson->time = date('Y-m-d H:i', strtotime("$date $time"));
         $lesson->comment = $request->input('comment');
         $lesson->homework = $request->input('homework');

@@ -42,7 +42,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function lessons() {
-        return $this->hasMany('App\Models\Lesson');
+    public function school() {
+        return $this->belongsTo('App\Models\School');
+    }
+
+    public function modules() {
+        return $this->hasMany('App\Models\Module');
+    }
+
+    public function grades() {
+        return $this->hasMany('App\Models\Grade');
     }
 }
