@@ -24,4 +24,8 @@ class Lesson extends Model
     public function timetable() {
         return $this->belongsTo('App\Models\Timetable');
     }
+
+    public function grades() {
+        return $this->hasMany('App\Models\Grade');
+    }
 }

@@ -14,4 +14,9 @@ class Room extends Model
     public function lessons() {
         return $this->hasMany('App\Models\Lesson');
     }
+
+
+    public function school() {
+        return $this->belongsTo('App\Models\School');
+    }
 }

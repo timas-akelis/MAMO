@@ -10,4 +10,14 @@ class Grade extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+
+
+    public function lesson() {
+        return $this->belongsTo('App\Models\Lesson');
+    }
 }
