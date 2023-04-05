@@ -14,4 +14,8 @@ class Timeslot extends Model
     public function school() {
         return $this->belongsTo('App\Models\School');
     }
+
+    public function lessons() {
+        return $this->hasMany('App\Models\Lesson');
+    }
 }
