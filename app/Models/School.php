@@ -26,4 +26,8 @@ class School extends Model
     public function timetables() {
         return $this->hasMany('App\Models\Timetable');
     }
+
+    public function timeslots() {
+        return $this->hasMany('App\Models\Timeslot');
+    }
 }

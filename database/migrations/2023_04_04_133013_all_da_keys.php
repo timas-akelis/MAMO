@@ -57,9 +57,7 @@ return new class extends Migration
             $table->dropColumn('user_id');
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('school_id');
-        });
+        
 
         Schema::table('grades', function (Blueprint $table) {
             $table->dropColumn('user_id');

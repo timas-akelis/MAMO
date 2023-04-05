@@ -26,6 +26,8 @@ Route::resource('grade', '\App\Http\Controllers\GradeController');
 Route::resource('school', '\App\Http\Controllers\SchoolController');
 Route::resource('timetable', '\App\Http\Controllers\TimetableController');
 Route::resource('rule', '\App\Http\Controllers\RuleController');
+Route::resource('timeslot', '\App\Http\Controllers\TimeslotController');
+Route::resource('mail', '\App\Http\Controllers\MailController');
 
 
 Route::get('/', function () {
