@@ -54,5 +54,23 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Grade');
     }
 
-    
+    public function mails() {
+        return $this->hasMany('App\Models\Mail', 'sender_id');
+    }
+
+    public function groups() {
+        return $this->belongsToMany('App\Models\Group', 'group_user', 'user_id', 'group_id');
+    }
+
+    public function parents() {
+        return $this->belongsToMany('App\Models\User', 'child_parent', 'child_id', 'parent_id');
+    }
+
+    public function child() {
+        return $this->belongsToMany('App\Models\User', 'child_parent', 'parent_id', 'child_id');
+    }
+
+    public function receivedMails() {
+        return $this->belongsToMany('App\Models\Mail', 'mail_received', 'receiver_id', 'mail_id');
+    }
 }
