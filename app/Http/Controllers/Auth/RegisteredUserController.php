@@ -40,6 +40,9 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'school_id' => 0, //JESUS CHRIST HARDCODE
+            //'school_id' => School::all()->sortByDesc('id')->first(), //HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT
+            //'school_id' => $data['school_id'], CIA REIKIA GAUTI IS /resources/views/auth/register SCHOOL ID
         ]);
 
         event(new Registered($user));

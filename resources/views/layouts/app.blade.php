@@ -56,6 +56,12 @@
                 <a class="navbar-brand" href="{{ url('/rule') }}">
                     Taisyklė
                 </a>
+                <a class="navbar-brand" href="{{ url('/timeslot') }}">
+                    Pamokos laikas
+                </a>
+                <a class="navbar-brand" href="{{ url('/mail') }}">
+                    Laiskai
+                </a>
 
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

@@ -27,9 +27,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('school_id')->constrained()->onDelete('cascade');
-        });
+
 
         Schema::table('grades', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -59,9 +57,7 @@ return new class extends Migration
             $table->dropColumn('user_id');
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('school_id');
-        });
+        
 
         Schema::table('grades', function (Blueprint $table) {
             $table->dropColumn('user_id');
