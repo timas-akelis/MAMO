@@ -7,6 +7,7 @@ use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Room;
 use App\Models\Timetable;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -18,7 +19,8 @@ class LessonController extends Controller
         //$lessons = Lesson::all();
         //return view('lesson.index')->with('lessons', $lessons);
 
-        $lessons = Lesson::all();
+        $userID = Auth::id();
+        $lessons = Lesson::where('id', $userID)->get();
         return view('lesson.index')->with('lessons', $lessons);
     }
 

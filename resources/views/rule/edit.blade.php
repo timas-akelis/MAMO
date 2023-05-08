@@ -12,6 +12,10 @@
             {{Form::date('dateTo', \Carbon\Carbon::now())}}
         </div>
         <div class="formGroup">
+            {{Form::label('userID', 'Ribojamas mokytojas')}}
+            {{Form::select('userID', $teachers, $rule->userID, ['class' => 'form-control'])}}
+        </div>
+        <div class="formGroup">
             {{Form::label('restriction', 'Ribojimas')}}
             {{Form::text('restriction', $rule->restriction, ['class' => 'form-control', 'placeholder' => ''])}}
         </div>
