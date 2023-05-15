@@ -29,8 +29,8 @@ class LessonController extends Controller
      */
     public function create()
     {
-        $modules = Module::all();
-        $rooms = Room::all();
+        $modules = Module::where('user_id', Auth::id())->get();
+        $rooms = Room::where('school_id', Auth::user()->school_id)->get();
         return view('lesson.create', compact('modules', 'rooms'));
     }
 

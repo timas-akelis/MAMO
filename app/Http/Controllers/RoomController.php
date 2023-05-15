@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Room;
+use Illuminate\Support\Facades\Auth;
+
 
 class RoomController extends Controller
 {
@@ -15,7 +17,7 @@ class RoomController extends Controller
         //$lessons = Lesson::all();
         //return view('lesson.index')->with('lessons', $lessons);
 
-        $rooms = Room::all();
+        $rooms = Room::where('school_id', Auth::user()->school_id)->get();
         return view('room.index')->with('rooms', $rooms);
     }
 
@@ -36,6 +38,7 @@ class RoomController extends Controller
         //Create lesson
         $room = new Room;
         $room->location = $request->input('location');
+        $room->school_id = Auth::user()->school_id;
         $room->save();
 
         return redirect('/room')->with('success', 'Room');
