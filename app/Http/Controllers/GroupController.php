@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Group;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -15,7 +16,7 @@ class GroupController extends Controller
         //$lessons = Lesson::all();
         //return view('lesson.index')->with('lessons', $lessons);
 
-        $groups = Group::all();
+        $groups = Group::where("school_id", Auth::user()->school_id)->get();
         return view('group.index')->with('groups', $groups);
     }
 
@@ -36,6 +37,7 @@ class GroupController extends Controller
         //Create lesson
         $group = new Group;
         $group->title = $request->input('title');
+        $group->school_id = Auth::user()->school_id;
         $group->save();
 
         return redirect('/group')->with('success', 'Group');

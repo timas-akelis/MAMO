@@ -7,6 +7,7 @@ use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Room;
 use App\Models\Timetable;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -18,7 +19,8 @@ class LessonController extends Controller
         //$lessons = Lesson::all();
         //return view('lesson.index')->with('lessons', $lessons);
 
-        $lessons = Lesson::all();
+        $userID = Auth::id();
+        $lessons = Lesson::where('id', $userID)->get();
         return view('lesson.index')->with('lessons', $lessons);
     }
 
@@ -27,8 +29,8 @@ class LessonController extends Controller
      */
     public function create()
     {
-        $modules = Module::all();
-        $rooms = Room::all();
+        $modules = Module::where('user_id', Auth::id())->get();
+        $rooms = Room::where('school_id', Auth::user()->school_id)->get();
         return view('lesson.create', compact('modules', 'rooms'));
     }
 
@@ -55,7 +57,7 @@ class LessonController extends Controller
         $lesson->comment = $request->input('comment');
         $lesson->homework = $request->input('homework');
         $lesson->test = $request->input('test');
-        $lesson->timeslot_id =0;
+        $lesson->timeslot_id = 0;
 
         $lesson->timetable_id = Timetable::orderBy('id', 'DESC')->first()->id; //HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT 
         

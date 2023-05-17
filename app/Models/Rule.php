@@ -15,4 +15,8 @@ class Rule extends Model
     public function school() {
         return $this->belongsTo('App\Models\School');
     }
+
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
 }

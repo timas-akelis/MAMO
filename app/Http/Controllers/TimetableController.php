@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Timetable;
+use App\Models\User;
+use App\Models\Timeslot;
+use App\Models\Lesson;
+use App\Models\Rule;
+use App\Models\Module;
+
+use Illuminate\Support\Facades\Auth;
+
 
 class TimetableController extends Controller
 {
@@ -15,7 +23,7 @@ class TimetableController extends Controller
         //$lessons = Lesson::all();
         //return view('lesson.index')->with('lessons', $lessons);
 
-        $timetables = Timetable::all();
+        $timetables = Timetable::where("school_id", Auth::user()->school_id)->get();
         return view('timetable.index')->with('timetables', $timetables);
     }
 
@@ -32,13 +40,36 @@ class TimetableController extends Controller
      */
     public function store(Request $request)
     {
+        $teachers = User::where('school_id', Auth::user()->school_id)
+                        ->where('role', 1)
+                        ->get();
 
-        //Create lesson
+        $timeslots = Timeslot::where('school_id', Auth::user()->school_id)->get();
+
+        $modules = Module::join('users', 'modules.user_id', '=', 'users.id')
+                         ->where('users.school_id', Auth::user()->school_id)
+                         ->get();
+
+        $rules = Rule::where('school_id', Auth::user()->school_id)->get();
+
+        //Create timetable
         $timetable = new Timetable;
         $timetable->year = $request->input('year');
+        $timetable->school_id = Auth::user()->school_id;
         $timetable->save();
 
-        return redirect('/timetable')->with('success', 'Tvarkarastis sukurtas');
+        $Matrix = [];
+        for ($i = 0; $i < count($teachers); $i++){
+            $teachersWeek = [];
+            for ($j = 0; $j < count($timeslots)*5; $j++){
+                array_push($teachersWeek, "-1");
+            }
+            array_push($Matrix, $teachersWeek);
+        }
+
+        
+
+        return redirect('/timetable')->with('success', "Sukurta sėkmingai");
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rule;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class RuleController extends Controller
 {
@@ -24,7 +26,8 @@ class RuleController extends Controller
      */
     public function create()
     {
-        return view('rule.create');
+        $teachers = $this->selectTeachers();
+        return view('rule.create', compact('teachers'));
     }
 
     /**
@@ -38,6 +41,8 @@ class RuleController extends Controller
         $rule->dateFrom = $request->input('dateFrom');
         $rule->dateTo = $request->input('dateTo');
         $rule->restriction = $request->input('restriction');
+        $rule->userID = $request->input('userID');
+        $rule->school_id = Auth::user()->school_id;
         $rule->save();
 
         return redirect('/rule')->with('success', 'Taisykle sukurta');
@@ -49,7 +54,8 @@ class RuleController extends Controller
     public function show(string $id)
     {
         $rule = Rule::find($id);
-        return view('rule.show')->with('rule', $rule);
+        $user = User::find($rule->userID);
+        return view('rule.show')->with(compact('rule', 'user'));
     }
 
     /**
@@ -58,7 +64,8 @@ class RuleController extends Controller
     public function edit(string $id)
     {
         $rule = Rule::find($id);
-        return view('rule.edit')->with('rule', $rule);
+        $teachers = $this->selectTeachers();
+        return view('rule.edit')->with(compact('rule', 'teachers'));
     }
 
     /**
@@ -71,6 +78,7 @@ class RuleController extends Controller
         $rule->dateFrom = $request->input('dateFrom');
         $rule->dateTo = $request->input('dateTo');
         $rule->restriction = $request->input('restriction');
+        $rule->userID = $request->input('userID');
         $rule->save();
 
         return redirect('/rule')->with('success', 'Taisykle issaugota');
@@ -84,5 +92,14 @@ class RuleController extends Controller
         $rule = Rule::find($id);
         $rule->delete();
         return redirect('/rule')->with('success', 'Taisykle panaikinta');
+    }
+
+    public function selectTeachers()
+    {
+        $teachers = User::where('role', 1)
+                        ->where('school_id', Auth::user()->school_id)
+                        ->get()
+                        ->pluck('name', 'id');
+        return $teachers;
     }
 }

@@ -11,6 +11,10 @@
             {{Form::label('hours', 'Hours in a week')}}
             {{Form::input('number', 'hours', '', ['class' => 'form-control', 'placeholder' => 'Hours'])}}
         </div>
+        <div class="formGroup">
+            {{Form::label('group_id', 'Grupė')}}
+            {{Form::select('group_id', $groups, null, ['class' => 'form-control'])}}
+        </div>
         {{Form::submit('Submit', ['class' => 'btn btn-dark'])}}
     {!! Form::close() !!}
 @endsection

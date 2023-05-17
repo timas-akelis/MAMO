@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Timeslot;
 use Ramsey\Uuid\Type\Time;
+use Illuminate\Support\Facades\Auth;
 
 class TimeslotController extends Controller
 {
@@ -13,7 +14,7 @@ class TimeslotController extends Controller
      */
     public function index()
     {
-        $timeslots = Timeslot::all();
+        $timeslots = Timeslot::where('school_id', Auth::user()->school_id)->get();
         return view('timeslot.index')->with('timeslots', $timeslots);
     }
 
@@ -36,6 +37,7 @@ class TimeslotController extends Controller
         $timeslot->slot = $request->input('slot');
         $timeslot->start = $request->input('start');
         $timeslot->length = $request->input('length');
+        $timeslot->school_id = Auth::user()->school_id;
         $timeslot->save();
 
         return redirect('/timeslot')->with('success', 'Pamokos laikas uzregistruotas');

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Module;
+use App\Models\Group;
+use Illuminate\Support\Facades\Auth;
 
 class ModuleController extends Controller
 {
@@ -12,7 +14,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        $modules = Module::all();
+        $modules = Module::where("user_id", Auth::id())->get();
         return view('module.index')->with('modules', $modules);
     }
 
@@ -21,7 +23,10 @@ class ModuleController extends Controller
      */
     public function create()
     {
-        return view('module.create');
+        $groups = Group::where('school_id', Auth::user()->school_id)
+                        ->get()
+                        ->pluck('title', 'id'); 
+        return view('module.create')->with(compact('groups'));
     }
 
     /**
@@ -37,6 +42,8 @@ class ModuleController extends Controller
         $module = new Module;
         $module->title = $request->input('title');
         $module->hours = $request->input('hours');
+        $module->user_id = Auth::id();
+        $module->group_id = $request->input('group_id');
         $module->save();
 
         return redirect('/module')->with('success', 'Module created');

@@ -11,6 +11,6 @@
             </div>
         @endforeach
     @else
-        <p>No lesson found</p>
+        <p>No lessons found</p>
     @endif
 @endsection

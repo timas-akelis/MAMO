@@ -18,4 +18,15 @@ class Timeslot extends Model
     public function lessons() {
         return $this->hasMany('App\Models\Lesson');
     }
+    public function end()
+    {
+        // Convert start time to seconds
+        $startSeconds = strtotime($this->start);
+
+        // Add duration to start time
+        $endSeconds = $startSeconds + ($this->length * 60);
+
+        // Convert end time to HH:MM:SS format
+        return date('H:i:s', $endSeconds);
+    }
 }
