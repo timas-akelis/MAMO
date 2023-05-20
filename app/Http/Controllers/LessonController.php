@@ -7,6 +7,9 @@ use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Room;
 use App\Models\Timetable;
+use App\Models\Timeslot;
+use App\Models\Grade;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
@@ -20,7 +23,12 @@ class LessonController extends Controller
         //return view('lesson.index')->with('lessons', $lessons);
 
         $userID = Auth::id();
-        $lessons = Lesson::where('id', $userID)->get();
+        $lessons = Lesson::join("modules", "lessons.module_id", "=", "modules.id")
+                         ->select("modules.user_id as user_id", "lessons.*")
+                         ->where('user_id', $userID)
+                         ->orderBy('time', "asc")
+                         ->get();
+
         return view('lesson.index')->with('lessons', $lessons);
     }
 
@@ -31,7 +39,8 @@ class LessonController extends Controller
     {
         $modules = Module::where('user_id', Auth::id())->get();
         $rooms = Room::where('school_id', Auth::user()->school_id)->get();
-        return view('lesson.create', compact('modules', 'rooms'));
+        $timeslots = Timeslot::all();
+        return view('lesson.create', compact('modules', 'rooms', 'timeslots'));
     }
 
     /**
@@ -57,10 +66,10 @@ class LessonController extends Controller
         $lesson->comment = $request->input('comment');
         $lesson->homework = $request->input('homework');
         $lesson->test = $request->input('test');
-        $lesson->timeslot_id = 0;
+        $lesson->timeslot_id = $request->input('timeslot_id');
 
-        $lesson->timetable_id = Timetable::orderBy('id', 'DESC')->first()->id; //HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT 
-        
+        $lesson->timetable_id = Timetable::orderBy('id', 'DESC')->first()->id; //HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT HARDCODED ALERT
+
         $lesson->save();
 
         return redirect('/lesson')->with('success', 'Lesson created');
@@ -74,7 +83,8 @@ class LessonController extends Controller
         $lesson = Lesson::find($id);
         $moduleLesson = Module::find($lesson->module_id);
         $roomLesson = Room::find($lesson->room_id);
-        return view('lesson.show', compact('lesson', 'moduleLesson', 'roomLesson'));
+        $timeslotLesson = TimeSlot::find($lesson->timeslot_id);
+        return view('lesson.show', compact('lesson', 'moduleLesson', 'roomLesson', 'timeslotLesson'));
         //return view('lesson.show')->with('lesson', $lesson);
     }
 
@@ -86,7 +96,14 @@ class LessonController extends Controller
         $lesson = Lesson::find($id);
         $modules = Module::all();
         $rooms = Room::all();
-        return view('lesson.edit', compact('lesson', 'modules', 'rooms'));
+        $timeslots = Timeslot::all();
+        $grades = Grade::where('lesson_id', $id)->get();
+        foreach ($grades as $grade) {
+            $user = User::find($grade->user_id);
+            $grade->user_name = $user->name;
+        }
+
+        return view('lesson.edit', compact('lesson', 'modules', 'rooms', 'timeslots', 'grades'));
     }
 
     /**
@@ -96,6 +113,7 @@ class LessonController extends Controller
     {
         $this->validate($request, [
             'time' => 'required',
+            'grade_values' => 'array', // Validate grade_values as an array
         ]);
 
         $date = $request->input('date');
@@ -110,6 +128,15 @@ class LessonController extends Controller
         $lesson->homework = $request->input('homework');
         $lesson->test = $request->input('test');
         $lesson->save();
+
+        $gradeValues = $request->input('grade_values');
+        $grades = Grade::where('lesson_id', $id)->get();
+        foreach ($gradeValues as $index => $gradeValue) {
+            if ($grades[$index]) {
+                $grades[$index]->value = $gradeValue;
+                $grades[$index]->save();
+            }
+        }
 
         return redirect('/lesson')->with('success', 'Lesson updated (currently overwrites time)');
     }
